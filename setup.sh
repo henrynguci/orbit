@@ -245,8 +245,8 @@ main() {
     echo -e "${GREEN}╚════════════════════════════════════════════════╝${NC}"
     echo ""
     echo ""
-    if [[ -n "$ZSH_VERSION" ]]; then
-        exec zsh -l
+    if [[ -n "$SHELL" ]]; then
+        exec "$SHELL" -l
     else
         exec bash -l
     fi
