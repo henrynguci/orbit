@@ -71,13 +71,22 @@ detect_os() {
 install_go() {
     print_step "Installing Go"
     
+    local MIN_VERSION="1.21"
+    local TARGET_VERSION="1.22.0"
+    
     if command_exists go; then
         local current_version=$(go version | awk '{print $3}' | sed 's/go//')
-        print_success "Go is already installed (version $current_version)"
-        return 0
+        local current_major_minor=$(echo "$current_version" | cut -d. -f1,2)
+        
+        if awk "BEGIN {exit !($current_major_minor >= $MIN_VERSION)}"; then
+            print_success "Go $current_version is already installed (>= $MIN_VERSION required)"
+            return 0
+        else
+            print_warning "Go $current_version found but < $MIN_VERSION, upgrading..."
+        fi
     fi
     
-    print_info "Installing Go 1.21+..."
+    print_info "Installing Go $TARGET_VERSION..."
     
     case $OS in
         debian)
@@ -134,7 +143,8 @@ install_glow() {
     print_step "Installing Glow (Markdown Viewer)"
     
     if command_exists glow; then
-        print_success "Glow is already installed"
+        local glow_version=$(glow --version 2>/dev/null | head -n1 | awk '{print $NF}' || echo "unknown")
+        print_success "Glow $glow_version is already installed"
         return 0
     fi
     
@@ -175,7 +185,8 @@ install_make() {
     print_step "Checking Make"
     
     if command_exists make; then
-        print_success "Make is already installed"
+        local make_version=$(make --version 2>/dev/null | head -n1 | awk '{print $3}' || echo "unknown")
+        print_success "Make $make_version is already installed"
         return 0
     fi
     
@@ -226,6 +237,21 @@ main() {
         print_warning "go.mod not found, skipping Go module installation"
     fi
     
+    if [[ -n "$BASH_VERSION" ]] && [[ -f ~/.bashrc ]]; then
+        print_info "Loading environment for current shell..."
+        export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+        print_success "Go is now available in current shell"
+        echo ""
+    elif [[ -n "$ZSH_VERSION" ]] && [[ -f ~/.zshrc ]]; then
+        print_info "Loading environment for current shell..."
+        export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+        print_success "Go is now available in current shell"
+        echo ""
+    else
+        print_warning "Please restart your shell or run: source ~/.bashrc (or ~/.zshrc)"
+        echo ""
+    fi
+    
     echo ""
     echo -e "${GREEN}╔════════════════════════════════════════════════╗${NC}"
     echo -e "${GREEN}║                                                ║${NC}"
@@ -239,19 +265,6 @@ main() {
     echo ""
     print_info "Or install it system-wide with:"
     echo "  make install"
-    echo ""
-    
-    if [[ -n "$BASH_VERSION" ]] && [[ -f ~/.bashrc ]]; then
-        print_info "Loading environment for current shell..."
-        export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-        print_success "Go is now available in current shell"
-    elif [[ -n "$ZSH_VERSION" ]] && [[ -f ~/.zshrc ]]; then
-        print_info "Loading environment for current shell..."
-        export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-        print_success "Go is now available in current shell"
-    else
-        print_warning "Please restart your shell or run: source ~/.bashrc (or ~/.zshrc)"
-    fi
     echo ""
 }
 
