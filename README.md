@@ -2,12 +2,14 @@
   <img src="images/logo.png" alt="Orbit Logo">
 </p>
 
-> Keep your side projects in orbit
+<p align="center"><i>Keep your side projects in orbit</i></p>
 
 Orbit is a powerful CLI tool and TUI application for managing your side projects. Built with Go, using [Cobra](https://github.com/spf13/cobra) for CLI, [Bubble Tea](https://github.com/charmbracelet/bubbletea) for TUI, and [Lip Gloss](https://github.com/charmbracelet/lipgloss) for styling.
 
-![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)
-![License](https://img.shields.io/badge/license-MIT-green)
+<p align="center">
+  <img src="https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go" alt="Go Version">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+</p>
 
 ## Features
 
