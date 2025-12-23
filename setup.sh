@@ -171,144 +171,6 @@ gpgkey=https://repo.charm.sh/yum/gpg.key' | sudo tee /etc/yum.repos.d/charm.repo
     print_success "Glow installed successfully"
 }
 
-install_gp() {
-    print_step "Installing gp (Charm's Git Tool)"
-    
-    if command_exists gp; then
-        print_success "gp is already installed"
-        return 0
-    fi
-    
-    print_info "Installing gp..."
-    
-    case $OS in
-        debian)
-            sudo apt-get install -y gum
-            ;;
-        fedora|rhel)
-            sudo yum install -y gum
-            ;;
-        arch)
-            sudo pacman -S --noconfirm gum
-            ;;
-        macos)
-            brew install gum
-            ;;
-        *)
-            go install github.com/charmbracelet/gum@latest
-            ;;
-    esac
-    
-    print_success "Charm tools installed successfully"
-}
-
-install_bat() {
-    print_step "Installing bat (Better cat)"
-    
-    if command_exists bat || command_exists batcat; then
-        print_success "bat is already installed"
-        return 0
-    fi
-    
-    print_info "Installing bat..."
-    
-    case $OS in
-        debian)
-            sudo apt-get install -y bat
-            if [[ ! -f ~/.local/bin/bat ]] && command_exists batcat; then
-                mkdir -p ~/.local/bin
-                ln -s /usr/bin/batcat ~/.local/bin/bat
-            fi
-            ;;
-        fedora|rhel)
-            sudo yum install -y bat
-            ;;
-        arch)
-            sudo pacman -S --noconfirm bat
-            ;;
-        macos)
-            brew install bat
-            ;;
-    esac
-    
-    print_success "bat installed successfully"
-}
-
-install_fzf() {
-    print_step "Installing fzf (Fuzzy Finder)"
-    
-    if command_exists fzf; then
-        print_success "fzf is already installed"
-        return 0
-    fi
-    
-    print_info "Installing fzf..."
-    
-    case $OS in
-        debian)
-            sudo apt-get install -y fzf
-            ;;
-        fedora|rhel)
-            sudo yum install -y fzf
-            ;;
-        arch)
-            sudo pacman -S --noconfirm fzf
-            ;;
-        macos)
-            brew install fzf
-            ;;
-        *)
-            git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-            ~/.fzf/install --all
-            ;;
-    esac
-    
-    print_success "fzf installed successfully"
-}
-
-install_golangci_lint() {
-    print_step "Installing golangci-lint"
-    
-    if command_exists golangci-lint; then
-        print_success "golangci-lint is already installed"
-        return 0
-    fi
-    
-    print_info "Installing golangci-lint..."
-    
-    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
-    
-    print_success "golangci-lint installed successfully"
-}
-
-install_git() {
-    print_step "Checking Git"
-    
-    if command_exists git; then
-        print_success "Git is already installed"
-        return 0
-    fi
-    
-    print_info "Installing Git..."
-    
-    case $OS in
-        debian)
-            sudo apt-get install -y git
-            ;;
-        fedora|rhel)
-            sudo yum install -y git
-            ;;
-        arch)
-            sudo pacman -S --noconfirm git
-            ;;
-        macos)
-            brew install git
-            ;;
-    esac
-    
-    print_success "Git installed successfully"
-}
-
 install_make() {
     print_step "Checking Make"
     
@@ -337,20 +199,6 @@ install_make() {
     print_success "Make installed successfully"
 }
 
-install_glamour() {
-    print_step "Installing Glamour (CLI Markdown Renderer)"
-    
-    if command_exists glamour; then
-        print_success "Glamour is already installed"
-        return 0
-    fi
-    
-    print_info "Installing Glamour..."
-    go install github.com/charmbracelet/glamour@latest
-    
-    print_success "Glamour installed successfully"
-}
-
 main() {
     print_header
     
@@ -362,18 +210,10 @@ main() {
     print_info "Starting installation of dependencies..."
     echo ""
     
-    install_git
     install_make
     install_go
     
-    install_golangci_lint
-    
     install_glow
-    install_gp
-    install_glamour
-    
-    install_bat
-    install_fzf
     
     print_step "Installing Go project dependencies"
     if [[ -f "go.mod" ]]; then
@@ -401,8 +241,22 @@ main() {
     echo "  make install"
     echo ""
     
-    print_warning "Please restart your shell or run: source ~/.bashrc (or ~/.zshrc)"
+    if [[ -n "$BASH_VERSION" ]] && [[ -f ~/.bashrc ]]; then
+        print_info "Loading environment for current shell..."
+        export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+        print_success "Go is now available in current shell"
+    elif [[ -n "$ZSH_VERSION" ]] && [[ -f ~/.zshrc ]]; then
+        print_info "Loading environment for current shell..."
+        export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+        print_success "Go is now available in current shell"
+    else
+        print_warning "Please restart your shell or run: source ~/.bashrc (or ~/.zshrc)"
+    fi
     echo ""
 }
 
 main
+
+if [[ -n "$BASH_VERSION" ]] || [[ -n "$ZSH_VERSION" ]]; then
+    export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+fi

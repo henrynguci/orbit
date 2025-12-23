@@ -40,11 +40,6 @@ cd orbit
 This script will automatically install:
 - Go 1.21+
 - glow (markdown viewer)
-- gp (Charm's Git tool)
-- glamour (markdown renderer)
-- bat (better cat)
-- fzf (fuzzy finder)
-- golangci-lint
 - All Go project dependencies
 
 ### Manual Installation
@@ -182,13 +177,7 @@ The `setup.sh` script installs a comprehensive set of CLI tools that enhance the
 |----------|------|-------------|
 | **Core** | [Go](https://go.dev) | Programming language (v1.21+) |
 | **Build** | [Make](https://www.gnu.org/software/make/) | Build automation tool |
-| **Git** | [Git](https://git-scm.com) | Version control system |
 | **Markdown** | [Glow](https://github.com/charmbracelet/glow) | terminal markdown reader |
-| **Markdown** | [Glamour](https://github.com/charmbracelet/glamour) | Markdown rendering library |
-| **Input** | [Gum](https://github.com/charmbracelet/gum) | Glamorous shell scripts |
-| **File Viewer** | [bat](https://github.com/sharkdp/bat) | Cat clone with syntax highlighting |
-| **Fuzzy Finder** | [fzf](https://github.com/junegunn/fzf) | Command-line fuzzy finder |
-| **Linter** | [golangci-lint](https://golangci-lint.run) | Go linters aggregator |
 
 All tools are automatically installed and configured when you run `./setup.sh`.
 
