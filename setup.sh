@@ -237,21 +237,6 @@ main() {
         print_warning "go.mod not found, skipping Go module installation"
     fi
     
-    if [[ -n "$BASH_VERSION" ]] && [[ -f ~/.bashrc ]]; then
-        print_info "Loading environment for current shell..."
-        export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-        print_success "Go is now available in current shell"
-        echo ""
-    elif [[ -n "$ZSH_VERSION" ]] && [[ -f ~/.zshrc ]]; then
-        print_info "Loading environment for current shell..."
-        export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-        print_success "Go is now available in current shell"
-        echo ""
-    else
-        print_warning "Please restart your shell or run: source ~/.bashrc (or ~/.zshrc)"
-        echo ""
-    fi
-    
     echo ""
     echo -e "${GREEN}╔════════════════════════════════════════════════╗${NC}"
     echo -e "${GREEN}║                                                ║${NC}"
@@ -259,17 +244,13 @@ main() {
     echo -e "${GREEN}║                                                ║${NC}"
     echo -e "${GREEN}╚════════════════════════════════════════════════╝${NC}"
     echo ""
-    
-    print_info "You can now build the project with:"
-    echo "  make build"
     echo ""
-    print_info "Or install it system-wide with:"
-    echo "  make install"
-    echo ""
+    print_info "Restarting shell to apply changes..."
+    if [[ -n "$ZSH_VERSION" ]]; then
+        exec zsh -l
+    else
+        exec bash -l
+    fi
 }
 
 main
-
-if [[ -n "$BASH_VERSION" ]] || [[ -n "$ZSH_VERSION" ]]; then
-    export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
-fi
