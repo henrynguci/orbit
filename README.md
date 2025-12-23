@@ -2,8 +2,6 @@
   <img src="images/logo.png" alt="Orbit Logo">
 </p>
 
-# Orbit
-
 > Keep your side projects in orbit
 
 Orbit is a powerful CLI tool and TUI application for managing your side projects. Built with Go, using [Cobra](https://github.com/spf13/cobra) for CLI, [Bubble Tea](https://github.com/charmbracelet/bubbletea) for TUI, and [Lip Gloss](https://github.com/charmbracelet/lipgloss) for styling.
@@ -13,7 +11,6 @@ Orbit is a powerful CLI tool and TUI application for managing your side projects
 
 ## Features
 
-- **Beautiful TUI** - Interactive terminal UI with ASCII banner
 - **Workspace Management** - Initialize and manage multiple workspaces
 - **Project Organization** - Create projects with repo, docs, and secret folders
 - **Status Tracking** - Track project status (active, archived, done)
@@ -54,25 +51,6 @@ go build -o orbit .
 ```bash
 sudo mv orbit /usr/local/bin/
 ```
-
-## Usage
-
-### TUI Mode
-
-Simply run `orbit` to open the interactive TUI with the ORBIT banner:
-
-```bash
-orbit
-```
-
-The TUI provides a menu with:
-- **Init Workspace** - Create workspace with optional project
-- **List Projects** - View all projects
-- **Alias** - Set project aliases
-- **Info** - View README.md
-- **Set Status** - Change project status
-- **Status** - View project status
-
 ### CLI Commands
 
 #### Initialize a Workspace
@@ -128,24 +106,6 @@ orbit status <project-name>
 orbit alias <project-name> <alias>
 ```
 
-## TUI Features
-
-- **ASCII Banner** - Beautiful ORBIT logo on startup
-- **Menu Navigation** - Use arrow keys or j/k
-- **Multi-step Forms** - Guided workspace/project creation
-- **Project List** - Filterable with status icons
-- **README Viewer** - Glamour markdown rendering with scroll
-
-## Keyboard Shortcuts
-
-| Key | Action |
-|-----|--------|
-| `↑/↓` or `j/k` | Navigate |
-| `Enter` | Select/Confirm |
-| `/` | Filter (in lists) |
-| `Esc` | Go back |
-| `q` | Quit |
-
 ## Configuration
 
 Configuration is stored in `~/.config/orbit/config.json`:
@@ -165,18 +125,6 @@ Configuration is stored in `~/.config/orbit/config.json`:
   }
 }
 ```
-
-## Rich Toolset
-
-The `setup.sh` script installs a comprehensive set of CLI tools that enhance the Orbit experience:
-
-| Category | Tool | Description |
-|----------|------|-------------|
-| **Core** | [Go](https://go.dev) | Programming language (v1.21+) |
-| **Build** | [Make](https://www.gnu.org/software/make/) | Build automation tool |
-| **Markdown** | [Glow](https://github.com/charmbracelet/glow) | terminal markdown reader |
-
-All tools are automatically installed and configured when you run `./setup.sh`.
 
 ## Development
 
@@ -206,7 +154,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 - [Charm](https://charm.sh/) for the amazing TUI libraries
 - [Cobra](https://github.com/spf13/cobra) for CLI framework
-- [Glamour](https://github.com/charmbracelet/glamour) for markdown rendering
+- [Glow](https://github.com/charmbracelet/glow) for markdown rendering
 
 ---
 
