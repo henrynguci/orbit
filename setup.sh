@@ -245,7 +245,6 @@ main() {
     echo -e "${GREEN}╚════════════════════════════════════════════════╝${NC}"
     echo ""
     echo ""
-    print_info "Restarting shell to apply changes..."
     if [[ -n "$ZSH_VERSION" ]]; then
         exec zsh -l
     else
