@@ -1,13 +1,8 @@
-# Orbit
+<p align="center">
+  <img src="images/logo.png" alt="Orbit Logo" width="200">
+</p>
 
-```
-  ██████╗  ██████╗  ██████╗  ██╗ ████████╗
- ██╔═══██╗ ██╔══██╗ ██╔══██╗ ██║ ╚══██╔══╝
- ██║   ██║ ██████╔╝ ██████╔╝ ██║    ██║   
- ██║   ██║ ██╔══██╗ ██╔══██╗ ██║    ██║   
- ╚██████╔╝ ██║  ██║ ██████╔╝ ██║    ██║   
-  ╚═════╝  ╚═╝  ╚═╝ ╚═════╝  ╚═╝    ╚═╝   
-```
+# Orbit
 
 > Keep your side projects in orbit
 
@@ -26,6 +21,8 @@ Orbit is a powerful CLI tool and TUI application for managing your side projects
 - **README Viewer** - Beautiful markdown rendering in terminal
 
 ## Installation
+
+![Orbit Setup](images/orbit.gif)
 
 ### Quick Setup (Recommended)
 
